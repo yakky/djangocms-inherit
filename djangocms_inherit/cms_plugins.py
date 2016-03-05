@@ -8,7 +8,7 @@ from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 from cms.utils import get_language_from_request
 from cms.utils.moderator import get_cmsplugin_queryset
-from cms.utils.plugins import downcast_plugins, build_plugin_tree
+from cms.utils.plugins import build_plugin_tree, downcast_plugins
 
 from .forms import InheritForm
 from .models import InheritPagePlaceholder
@@ -16,12 +16,12 @@ from .models import InheritPagePlaceholder
 
 class InheritPagePlaceholderPlugin(CMSPluginBase):
     """
-    Locates the plugins associated with the "from_page" of an
+    Locates the plugins associated with the 'from_page' of an
     InheritPagePlaceholder instance and renders those plugins sequentially
     """
     model = InheritPagePlaceholder
-    name = _("Inherit Plugins from Page")
-    render_template = "cms/plugins/inherit_plugins.html"
+    name = _('Inherit Plugins from Page')
+    render_template = 'cms/plugins/inherit_plugins.html'
     form = InheritForm
     admin_preview = False
     page_only = True
@@ -71,8 +71,8 @@ class InheritPagePlaceholderPlugin(CMSPluginBase):
             plugin_tree = downcast_plugins(plugins)
             plugin_tree[0].parent_id = None
             plugin_tree = build_plugin_tree(plugin_tree)
-            #  Replace plugin instance with plugin instance with correct
-            #  child_plugin_instances set
+            # Replace plugin instance with plugin instance with correct
+            # child_plugin_instances set
             inst = plugin_tree[0]
             outstr = inst.render_plugin(tmpctx, placeholder)
             plugin_output.append(outstr)
@@ -84,7 +84,7 @@ class InheritPagePlaceholderPlugin(CMSPluginBase):
         form = super(InheritPagePlaceholderPlugin, self).get_form(
             request, obj, **kwargs)
 
-        # this is bit tricky, since i don't wont override add_view and
+        # this is bit tricky, since i don't want to override add_view and
         # change_view
         class FakeForm(object):
             def __init__(self, form, site):
@@ -97,7 +97,7 @@ class InheritPagePlaceholderPlugin(CMSPluginBase):
                 self.base_fields = form.base_fields
 
             def __call__(self, *args, **kwargs):
-                # instanciate the form on call
+                # instantiate the form on call
                 form = self.form(*args, **kwargs)
                 # tell form we are on this site
                 form.for_site(self.site)
