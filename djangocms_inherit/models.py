@@ -17,7 +17,7 @@ class InheritPagePlaceholder(CMSPlugin):
     associated 'parent' page instance
     """
     from_page = PageField(
-        null=True, blank=True,
+        null=True,
         help_text=_('Choose a page to include its plugins into this '
                     'placeholder, empty will choose current page'))
 
